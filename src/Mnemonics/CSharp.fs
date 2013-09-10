@@ -83,6 +83,24 @@ let cSharpStructureTemplates =
     )
   ]
 
+let cSharpUntypedMemberTemplates =
+  [
+    (
+      "tm",
+      [
+        Text "A test method."
+      ],
+      [
+        Text "[Test] public void "
+        Constant ("methodname", "MyMethod")
+        Text "()"
+        Scope [
+          endConstant
+        ]
+      ]
+    )
+  ]
+
 let cSharpMemberTemplates =
   [
     (
@@ -107,7 +125,7 @@ let cSharpMemberTemplates =
       ],
       [
         Text "private readonly "
-        Constant ("type", "type")
+        FixedType
         Text " "
         Constant ("fieldname", "fieldname")
         semiColon
@@ -159,20 +177,6 @@ let cSharpMemberTemplates =
         Text " = "
         DefaultValue
         semiColon
-      ]
-    )
-    (
-      "t",
-      [
-        Text "A test method."
-      ],
-      [
-        Text "[Test] public void "
-        Constant ("methodname", "MyMethod")
-        Text "()"
-        Scope [
-          endConstant
-        ]
       ]
     )
     (

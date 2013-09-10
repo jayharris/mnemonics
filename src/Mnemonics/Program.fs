@@ -111,6 +111,19 @@ let renderReSharper() =
 
   // now process members
   if renderCSharp then
+    for (s,doc,exprs) in cSharpUntypedMemberTemplates do
+      let t = new TemplatesExportTemplate(shortcut=s)
+      let vars = new List<TemplatesExportTemplateVariable>()
+      t.description <- printExpressions doc vars String.Empty
+      t.reformat <- "True"
+      t.uid <- newGuid()
+      t.text <- printExpressions exprs vars String.Empty
+
+      t.Context <- new TemplatesExportTemplateContext(CSharpContext = csContext)
+      t.Variables <- vars.ToArray()
+      templates.Add t
+    done
+
     for (s,doc,exprs) in cSharpMemberTemplates do
       // simple types; methods can be void
       let types = (if Char.ToLower(s.Chars(0)) ='m' then ("", "void", "") :: csharpTypes else csharpTypes)
@@ -166,6 +179,18 @@ let renderReSharper() =
     done
 
   if renderVBNET then
+    for (s,doc,exprs) in vbUntypedMemberTemplates do
+      let t = new TemplatesExportTemplate(shortcut=s)
+      let vars = new List<TemplatesExportTemplateVariable>()
+      t.description <- printExpressions doc vars String.Empty
+      t.reformat <- "False" // critical difference with C#!!!
+      t.uid <- newGuid()
+      t.text <- printExpressions exprs vars String.Empty
+      t.Context <- new TemplatesExportTemplateContext(VBContext = vbContext)
+      t.Variables <- vars.ToArray()
+      templates.Add t
+    done
+
     for (s,doc,exprs) in vbMemberTemplates do
       // simple types; methods can be void
       for (tk,tv,defValue) in vbTypes do

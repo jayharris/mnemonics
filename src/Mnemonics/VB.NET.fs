@@ -71,6 +71,21 @@ let vbStructureTemplates =
     )
   ]
 
+let vbUntypedMemberTemplates =
+  [
+    (
+      "tm",
+      [
+        Text "A test method."
+      ],
+      [
+        Text "<Test> Public Sub "
+        Constant ("methodname", "SomeMethod")
+        Text "()"
+      ]
+    )
+  ]
+
 let vbMemberTemplates =
   [
     (
@@ -142,17 +157,6 @@ let vbMemberTemplates =
         FixedType
         Text " = "
         DefaultValue
-      ]
-    )
-    (
-      "t",
-      [
-        Text "A test method."
-      ],
-      [
-        Text "<Test> Public Sub "
-        Constant ("methodname", "SomeMethod")
-        Text "()"
       ]
     )
     (
